@@ -20,10 +20,9 @@ function Home() {
   const { chain } = useNetwork();
   const { chains, pendingChainId, switchNetwork } = useSwitchNetwork();
 
+  console.log(chain);
   const addChain = async () => {
-    console.log("inside");
     if (window.ethereum) {
-      console.log("inside if");
       await window.ethereum.request({
         method: "wallet_addEthereumChain",
         params: [

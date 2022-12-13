@@ -20,16 +20,22 @@ function Home() {
   const { chain } = useNetwork();
   const { chains, pendingChainId, switchNetwork } = useSwitchNetwork();
 
-  const addChain = () => {
+  const addChain = async () => {
+    console.log("inside");
     if (window.ethereum) {
-      window.ethereum.request({
+      console.log("inside if");
+      await window.ethereum.request({
         method: "wallet_addEthereumChain",
         params: [
           {
-            chainId: "0x405",
-            rpcUrls: ["https://pre-rpc.bittorrentchain.io/"],
-            chainName: "BitTorrent Chain Donau",
-            blockExplorerUrls: ["https://testscan.bittorrentchain.io/"],
+            chainId: "0x4E454153", //1313161555
+            chainName: "Aurora Testnet",
+            rpcUrls: ["https://testnet.aurora.dev/"],
+            blockExplorerUrls: ["https://testnet.aurorascan.dev/"],
+            nativeCurrency: {
+              symbol: "ETH",
+              decimals: 18,
+            },
           },
         ],
       });
@@ -88,7 +94,7 @@ function Home() {
       <button onClick={() => switchNetwork?.(80001)}>switch to polygon</button>
       <button onClick={() => switchNetwork?.(5)}>switch to goerli</button>
       <button onClick={() => switchNetwork?.(338)}>switch to cronos</button>
-      <button onClick={() => addChain}>add network</button>
+      <button onClick={() => addChain()}>add network</button>
 
       {error && <div>{error.message}</div>}
     </div>

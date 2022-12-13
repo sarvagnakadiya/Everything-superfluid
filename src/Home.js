@@ -94,6 +94,7 @@ function Home() {
       <button onClick={() => switchNetwork?.(5)}>switch to goerli</button>
       <button onClick={() => switchNetwork?.(338)}>switch to cronos</button>
       <button onClick={() => addChain()}>add network</button>
+      <button onClick={() => addChain()}>Route another page</button>
 
       {error && <div>{error.message}</div>}
     </div>

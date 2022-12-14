@@ -20,14 +20,11 @@ function App() {
   return (
     <div className="App">
       <WagmiConfig client={client}>
+        {/* <AddNetwork></AddNetwork> */}
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/AddNetwork" element={<AddNetwork />} />
-            {/* <Route path="/" element={<AddNetwork />}>
-              <Route index element={<Home />} />
-              <AddNetwork></AddNetwork>
-            </Route> */}
+            <Route path="/add-network" element={<AddNetwork />} />
           </Routes>
         </BrowserRouter>
       </WagmiConfig>

@@ -9,6 +9,7 @@ import {
   useNetwork,
   useSwitchNetwork,
 } from "wagmi";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const { address, connector, isConnected } = useAccount();
@@ -20,6 +21,7 @@ function Home() {
   const { chain } = useNetwork();
   const { chains, pendingChainId, switchNetwork } = useSwitchNetwork();
 
+  const navigate = useNavigate();
   console.log(chain);
   const addChain = async () => {
     if (window.ethereum) {
@@ -94,7 +96,9 @@ function Home() {
       <button onClick={() => switchNetwork?.(5)}>switch to goerli</button>
       <button onClick={() => switchNetwork?.(338)}>switch to cronos</button>
       <button onClick={() => addChain()}>add network</button>
-      <button onClick={() => addChain()}>Route another page</button>
+      <button onClick={() => navigate("/add-network")}>
+        Route another page
+      </button>
 
       {error && <div>{error.message}</div>}
     </div>

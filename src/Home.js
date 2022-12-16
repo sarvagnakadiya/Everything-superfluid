@@ -10,6 +10,7 @@ import {
   useSwitchNetwork,
 } from "wagmi";
 import { useNavigate } from "react-router-dom";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 function Home() {
   const { address, connector, isConnected } = useAccount();
@@ -61,6 +62,12 @@ function Home() {
 
   return (
     <div>
+      <ConnectButton
+        accountStatus={{
+          smallScreen: "avatar",
+          largeScreen: "full",
+        }}
+      />
       {connectors.map((connector) => (
         <button
           disabled={!connector.ready}
@@ -99,6 +106,10 @@ function Home() {
       <button onClick={() => navigate("/add-network")}>
         Route another page
       </button>
+      <button onClick={() => navigate("/create-flow")}>
+        go to stream page
+      </button>
+      {/* <button onClick={() => navigate("/stream")}>go to stream page</button> */}
 
       {error && <div>{error.message}</div>}
     </div>

@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Home";
+import IDA from "./IDA";
 import AddNetwork from "./AddNetwork";
 import CreateFlow from "./CreateFlow";
 import { WagmiConfig, createClient, configureChains } from "wagmi";
@@ -46,6 +47,8 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/add-network" element={<AddNetwork />} />
               <Route path="/create-flow" element={<CreateFlow />} />
+              <Route path="/ida" element={<IDA />} />
+              {/* <Route path="/create-platform" element={<CreatePlatform />} /> */}
             </Routes>
           </BrowserRouter>
         </RainbowKitProvider>

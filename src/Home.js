@@ -109,7 +109,8 @@ function Home() {
       <button onClick={() => navigate("/create-flow")}>
         go to stream page
       </button>
-      <button onClick={() => navigate("/ida")}>create IDA</button>
+      <button onClick={() => navigate("/create-index")}>go to IDA page</button>
+
       {/* <button onClick={() => navigate("/stream")}>go to stream page</button> */}
 
       {error && <div>{error.message}</div>}

@@ -26,9 +26,9 @@ const IDADemo = () => {
       chainId: 5,
       provider: provider,
     });
-    const ethx = await sf.loadSuperToken("ETHx");
+    const daix = await sf.loadSuperToken("fDAIx");
     try {
-      const createIndexOperation = ethx.createIndex({
+      const createIndexOperation = daix.createIndex({
         indexId: id.toString(),
       });
       console.log("Creating your Index...");
@@ -39,7 +39,7 @@ const IDADemo = () => {
         console.log(
           `Congrats - you've just created a new Index!
              Network: Goerli
-             Super Token: DAIx
+             Super Token: fDAIx
              Index ID: ${id}
           `
         );
@@ -50,19 +50,19 @@ const IDADemo = () => {
   };
   //------------------to create Index using superfluid' SDK core------------------
   const addSubscriber = async () => {
-    console.log("Index creating");
+    console.log("Adding subscriber");
     const sf = await Framework.create({
       chainId: 5,
       provider: provider,
     });
-    const ethx = await sf.loadSuperToken("ETHx");
+    const daix = await sf.loadSuperToken("fDAIx");
     try {
-      const createIndexOperation = ethx.updateSubscriptionUnits({
+      const createIndexOperation = daix.updateSubscriptionUnits({
         indexId: id,
         subscriber: subscriberData.subscriberAddress,
         units: subscriberData.subscriberUnits,
       });
-      console.log("Creating your Index...");
+      console.log("Adding the subscriber...");
 
       const sign = await createIndexOperation.exec(signer);
       const receipt = await sign.wait(sign);
@@ -85,9 +85,9 @@ const IDADemo = () => {
       chainId: 5,
       provider: provider,
     });
-    const ethx = await sf.loadSuperToken("ETHx");
+    const daix = await sf.loadSuperToken("fDAIx");
     try {
-      const createIndexOperation = await ethx.getSubscription({
+      const createIndexOperation = await daix.getSubscription({
         publisher: await signer.getAddress(),
         indexId: id,
         subscriber: subscriberData.subscriberAddress,
@@ -115,9 +115,9 @@ const IDADemo = () => {
       chainId: 5,
       provider: provider,
     });
-    const ethx = await sf.loadSuperToken("ETHx");
+    const daix = await sf.loadSuperToken("fDAIx");
     try {
-      let res = await ethx.getIndex({
+      let res = await daix.getIndex({
         publisher: await signer.getAddress(),
         indexId: id,
         providerOrSigner: signer,
@@ -133,11 +133,11 @@ const IDADemo = () => {
       chainId: 5,
       provider: provider,
     });
-    const ethx = await sf.loadSuperToken("ETHx");
+    const daix = await sf.loadSuperToken("fDAIx");
     try {
-      const createIndexOperation = ethx.updateIndexValue({
+      const createIndexOperation = daix.updateIndexValue({
         indexId: id,
-        indexValue: "10000",
+        indexValue: "100000000000000000000",
       });
       console.log("updateing your Index value...");
 
@@ -156,10 +156,10 @@ const IDADemo = () => {
       provider: provider,
     });
     //daix token loading
-    const ethx = await sf.loadSuperToken("ETHx");
+    const daix = await sf.loadSuperToken("fDAIx");
     try {
       //---------------------------approveSubscription
-      const subscribeOperation = ethx.approveSubscription({
+      const subscribeOperation = daix.approveSubscription({
         indexId: id,
         publisher: "0xcc920c851327AF767b4bf770e3b2C2ea50B90fde",
       });
@@ -185,10 +185,10 @@ const IDADemo = () => {
       provider: provider,
     });
     //daix token loading
-    const ethx = await sf.loadSuperToken("ETHx");
+    const daix = await sf.loadSuperToken("fDAIx");
     try {
       //---------------------------revoke Subscription-------------------
-      const subscribeOperation = ethx.revokeSubscription({
+      const subscribeOperation = daix.revokeSubscription({
         indexId: id,
         publisher: "0xcc920c851327AF767b4bf770e3b2C2ea50B90fde",
       });
@@ -207,10 +207,10 @@ const IDADemo = () => {
       provider: provider,
     });
     //daix token loading
-    const ethx = await sf.loadSuperToken("ETHx");
+    const daix = await sf.loadSuperToken("fDAIx");
     try {
       //---------------------------revoke Subscription-------------------
-      const subscribeOperation = ethx.deleteSubscription({
+      const subscribeOperation = daix.deleteSubscription({
         indexId: id,
         subscriber: subscriberData.subscriberAddress,
         publisher: "0xcc920c851327AF767b4bf770e3b2C2ea50B90fde",
@@ -230,12 +230,36 @@ const IDADemo = () => {
       provider: provider,
     });
     //daix token loading
-    const ethx = await sf.loadSuperToken("ETHx");
+    const daix = await sf.loadSuperToken("fDAIx");
     try {
       //---------------------------Distribute funds-------------------
-      const subscribeOperation = ethx.distribute({
+      const subscribeOperation = daix.distribute({
         indexId: id,
-        amount: "1000",
+        amount: "100000000000000000000",
+      });
+      const tx = await subscribeOperation.exec(signer);
+      const receipt = await tx.wait();
+      if (receipt) {
+        console.log("FUNDS DISTRIBUTED");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const claimFunds = async () => {
+    const sf = await Framework.create({
+      chainId: 5,
+      provider: provider,
+    });
+    //daix token loading
+    const daix = await sf.loadSuperToken("fDAIx");
+    try {
+      //---------------------------Distribute funds-------------------
+      console.log("claiming funds");
+      const subscribeOperation = daix.claim({
+        indexId: id,
+        subscriber: await signer.getAddress(),
+        publisher: "0xcc920c851327AF767b4bf770e3b2C2ea50B90fde",
       });
       const tx = await subscribeOperation.exec(signer);
       const receipt = await tx.wait();
@@ -276,6 +300,8 @@ const IDADemo = () => {
       <button onClick={() => ida()}>IDA</button>
       <button onClick={() => revokeIda()}>revoke IDA</button>
       <button onClick={() => deleteSubscription()}>Delete subscriber</button>
+      <button onClick={() => distributeFunds()}>Distribute funds</button>
+      <button onClick={() => claimFunds()}>claim funds</button>
     </div>
   );
 };
